@@ -27,7 +27,9 @@ public class MovementController : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        isGrounded = Physics.CheckSphere(groundCheckPoint.position, groundDistance, groundMask);
+        //isGrounded = Physics.CheckSphere(groundCheckPoint.position, groundDistance, groundMask);
+        Vector3 dist = new Vector3(0, 0.55f, 0);
+        isGrounded = Physics.CheckCapsule(transform.position - dist, transform.position + dist, 0.48f, groundMask);
 
         gravity = isGrounded ? 0 : -9.81f;
         downVel = isGrounded ? Vector3.zero : downVel;
@@ -45,6 +47,6 @@ public class MovementController : MonoBehaviour
 
     public void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(groundCheckPoint.position, groundDistance);
+        //Gizmos.DrawSphere(groundCheckPoint.position, groundDistance);
     }
 }
