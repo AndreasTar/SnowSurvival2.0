@@ -6,12 +6,10 @@ public class MovementController : MonoBehaviour
 {
 
     [SerializeField] CharacterController cC;
-    [SerializeField] Transform groundCheckPoint;
 
     [SerializeField] float movementSpeed = 5f;
     public float gravity = -9.81f;
 
-    [SerializeField] float groundDistance = 0.4f;
     [SerializeField] LayerMask groundMask;
 
     [SerializeField] float turnSmoothTime = 0.1f;
@@ -27,7 +25,6 @@ public class MovementController : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        //isGrounded = Physics.CheckSphere(groundCheckPoint.position, groundDistance, groundMask);
         Vector3 dist = new Vector3(0, 0.55f, 0);
         isGrounded = Physics.CheckCapsule(transform.position - dist, transform.position + dist, 0.48f, groundMask);
 
@@ -43,10 +40,5 @@ public class MovementController : MonoBehaviour
         downVel.y += gravity * Time.deltaTime * Time.deltaTime;
         cC.Move(downVel);
         cC.Move(direction * movementSpeed * Time.deltaTime);
-    }
-
-    public void OnDrawGizmos()
-    {
-        //Gizmos.DrawSphere(groundCheckPoint.position, groundDistance);
     }
 }
