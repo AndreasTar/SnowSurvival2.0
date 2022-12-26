@@ -17,6 +17,7 @@ public class MovementController : MonoBehaviour
     float turnSmoothVelocity;
     bool isGrounded;
     Vector3 downVel = Vector3.zero;
+    Vector3 dist = new Vector3(0, 0.55f, 0);
 
     // Update is called once per frame
     void Update()
@@ -25,7 +26,6 @@ public class MovementController : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        Vector3 dist = new Vector3(0, 0.55f, 0);
         isGrounded = Physics.CheckCapsule(transform.position - dist, transform.position + dist, 0.48f, groundMask);
 
         gravity = isGrounded ? 0 : -9.81f;
@@ -40,5 +40,11 @@ public class MovementController : MonoBehaviour
         downVel.y += gravity * Time.deltaTime * Time.deltaTime;
         cC.Move(downVel);
         cC.Move(direction * movementSpeed * Time.deltaTime);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawSphere(transform.position - dist, 0.48f);
+        Gizmos.DrawSphere(transform.position + dist, 0.48f);
     }
 }
